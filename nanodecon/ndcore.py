@@ -40,7 +40,7 @@ def primary_search(args):
     logging.info("Primary search")
     cmd = "kma -i {}/trimmed-reads.fastq.gz -o {}/primary-search -t_db {} -t 8 -mem_mode -mp 20 -mrs 0.0 -bcNano -bc 0.7".format(args.output, args.output, args.bac_db)
     os.system(cmd)
-    cmd = "sort -t$'\t' -k2nr {}/primary-search.res > {}/primary-search.sorted.res".format(args.output, args.output)
+    cmd = "sort -t$\'\t\' -k2nr {}/primary-search.res > {}/primary-search.sorted.res".format(args.output, args.output)
     os.system(cmd)
 
     #Read in primary search results sorted
