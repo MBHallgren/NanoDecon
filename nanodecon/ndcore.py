@@ -45,8 +45,10 @@ def primary_search(args):
 
     #Read in primary search results sorted
     with open("{}/primary-search.sorted.res".format(args.output), "r") as f:
-        f.readline()
         line = f.readline()
+        print (line)
+        line = f.readline()
+        print (line)
         top_scoring_template = Kma_result(line)
     print (top_scoring_template.name)
 
