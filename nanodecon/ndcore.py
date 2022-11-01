@@ -24,7 +24,7 @@ def nano_decon(args):
 
 def primary_search(args):
     logging.info("Primary search")
-    cmd = "kma -i {}/trimmed-reads.fastq.gz -o {}/primary-search -t_db {} -t 8 -mint3".format(args.output, args.output, args.bac_db)
+    cmd = "kma -i {}/trimmed-reads.fastq.gz -o {}/primary-search -t_db {} -t 8 -mem_mode -mp 20 -mrs 0.0 -bcNano -bc 0.7".format(args.output, args.output, args.bac_db)
     os.system(cmd)
 
 def set_up_output_folder(args):
