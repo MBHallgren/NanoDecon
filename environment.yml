@@ -60,4 +60,3 @@ dependencies:
   - xz=5.2.6=h775f41a_0
   - zlib=1.2.13=hfd90126_4
   - zstd=1.5.2=hfa58983_4
-prefix: /Users/malhal/anaconda3/envs/kmatest
