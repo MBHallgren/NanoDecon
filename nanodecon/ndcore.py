@@ -15,7 +15,7 @@ def nano_decon(args):
     try:
         set_up_output_folder(args)
         filt_long(args)
-
+        primary_search(args)
         logging.info("NanoDecon finished successfully")
     except Exception as e:
         logging.error(e, exc_info=True)
