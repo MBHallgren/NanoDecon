@@ -1,0 +1,6 @@
+name: nanodecony
+channels:
+  - bioconda
+dependencies:
+  - nanofilt
+  - kma
