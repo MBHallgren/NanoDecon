@@ -75,6 +75,7 @@ def filter_out_reads_from_fastq(read_list, args):
             print (read[1])
             print (read[2])
             print (read[3])
+            sys.exit()
 
 
         #with gzip.open("{}/trimmed-reads.fastq.gz".format(args.output), "rb") as infile:
