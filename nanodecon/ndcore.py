@@ -70,9 +70,10 @@ def filter_out_reads_from_fastq(read_list, args):
     with gzip.open("{}/decon-reads.fastq.gz".format(args.output, 'rt', encoding='utf-8'), "wb") as outfile:
         with gzip.open("{}/trimmed-reads.fastq.gz".format(args.output), "rb") as infile:
             for line in infile:
-                sys.exit(line.decode().split(" ")[0] )
                 if line.decode().split(" ")[0] in read_list:
-                    outfile.write(line)
+                    print (line.decode())
+                    sys.exit()
+                    #outfile.write(line)
 
 def evaluate_primary_results(args, kma_results):
     """ index 0 is top scoring template, -1 is lowest"""
