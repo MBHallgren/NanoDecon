@@ -38,7 +38,6 @@ class Kma_result:
 
 def primary_search(args):
     logging.info("Primary search")
-    #cmd = "kma -i {}/trimmed-reads.fastq.gz -o {}/primary-search -t_db {} -t 8 -nf -mem_mode -sasm -ef -1t1".format(args.output, args.output, args.bac_db)
     cmd = "kma -i {}/trimmed-reads.fastq.gz -o {}/primary-search -t_db {} -t 8 -mem_mode -mp 20 -mrs 0.0 -bcNano -bc 0.7".format(args.output, args.output, args.bac_db)
     os.system(cmd)
     cmd = "sort -t \'\t\' -k2nr {}/primary-search.res > {}/primary-search.sorted.res".format(args.output, args.output)
@@ -47,11 +46,21 @@ def primary_search(args):
     #Read in primary search results sorted
     with open("{}/primary-search.sorted.res".format(args.output), "r") as f:
         kma_results = [Kma_result(line) for line in f if not line.startswith("#")]
-    evaluate_primary_results(kma_results)
+    evaluate_primary_results(args, kma_results)
 
-def evaluate_primary_results(kma_results):
+def get_kma_template_number(args, name):
+    with open('{}.name'.format(args.bac_db), 'r') as infile:
+        t = 1
+        for line in infile:
+            if name in line:
+                return t
+            t += 1
+        return t
+
+def evaluate_primary_results(args, kma_results):
     """ index 0 is top scoring template, -1 is lowest"""
-
+    best_template_number = get_kma_template_number(args, kma_results[0].name)
+    print (best_template_number)
 
 
 def set_up_output_folder(args):
