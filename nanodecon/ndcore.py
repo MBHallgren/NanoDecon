@@ -71,7 +71,11 @@ def filter_out_reads_from_fastq(read_list, args):
     with gzip.open("{}/decon-reads.fastq.gz".format(args.output, 'rt', encoding='utf-8'), "wb") as outfile:
         fq = pyfastx.Fastq("{}/trimmed-reads.fastq.gz".format(args.output), build_index=False)
         for read in fq:
-            print (read.name)
+            print (read[0])
+            print (read[1])
+            print (read[2])
+            print (read[3])
+
 
         #with gzip.open("{}/trimmed-reads.fastq.gz".format(args.output), "rb") as infile:
         #    for line in infile:
