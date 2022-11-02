@@ -70,7 +70,8 @@ def filter_out_reads_from_fastq(read_list, args):
     with gzip.open("{}/decon-reads.fastq.gz".format(args.output, 'rt', encoding='utf-8'), "wb") as outfile:
         with gzip.open("{}/trimmed-reads.fastq.gz".format(args.output), "rb") as infile:
             for line in infile:
-                print (line.split()[0][1:])
+                print (line.decode().split())
+                sys.exit()
                 if line.split()[0][1:] in read_list:
                     outfile.write(line)
 
