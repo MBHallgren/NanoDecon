@@ -1,6 +1,7 @@
 import sys
 import os
 import logging
+import gzip
 
 
 import nanodecon.ndhelpers as ndhelpers
@@ -57,11 +58,28 @@ def get_kma_template_number(args, name):
             t += 1
         return t
 
+def derive_read_list_from_frag(file):
+
+    with gzip.open(file, 'rb') as f:
+        read_list = [line.split('\t')[5] for line in f]
+    return read_list
+
+
+
+def filter_out_reads_from_fastq(read_list, args):
+    with gzip.open("{}/decon-reads.fastq.gz".format(args.output), "wb") as outfile:
+        with gzip.open("{}/trimmed-reads.fastq.gz".format(args.output), "rb") as infile:
+            for line in infile:
+                if line.split()[0][1:] in read_list:
+                    outfile.write(line)
+
 def evaluate_primary_results(args, kma_results):
     """ index 0 is top scoring template, -1 is lowest"""
-    if kma_results[0].score > kma_results[1].score * 3:
+    prime_score = kma_results[0].score/kma_results[1].score
+    if prime_score > 3:
         cmd = "kma -i {}/trimmed-reads.fastq.gz -o {}/primary-alignment -t_db {} -t 8 -mint3 -Mt1 {} ".format(args.output, args.output, args.bac_db, get_kma_template_number(args, kma_results[0].name))
         os.system(cmd)
+        filter_out_reads_from_fastq(derive_read_list_from_frag("{}/primary-alignment.frag.gz".format(args.output)), args)
     else:
         print ("No clear primary template found")
         print ("tbd")
