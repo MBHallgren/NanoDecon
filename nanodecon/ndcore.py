@@ -69,7 +69,7 @@ def derive_read_list_from_frag(file):
 
 def filter_out_reads_from_fastq(read_list, args):
     with gzip.open("{}/decon-reads.fastq.gz".format(args.output, 'rt', encoding='utf-8'), "wb") as outfile:
-        fq = pyfastx.Fastq('//home/projects/cge/people/malhal/binning/pigA_merged.fastq.gz', build_index=False)
+        fq = pyfastx.Fastq("{}/trimmed-reads.fastq.gz".format(args.output), build_index=False)
         for read in fq:
             print (read.name)
 
