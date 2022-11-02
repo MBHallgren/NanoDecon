@@ -59,8 +59,12 @@ def get_kma_template_number(args, name):
 
 def evaluate_primary_results(args, kma_results):
     """ index 0 is top scoring template, -1 is lowest"""
-    best_template_number = get_kma_template_number(args, kma_results[0].name)
-    print (best_template_number)
+    if kma_results[0].score > kma_results[1].score * 3:
+        cmd = "kma -i {}/trimmed-reads.fastq.gz -o {}/primary-alignment -t_db {} -t 8 -mint3 -Mt1 {} ".format(args.output, args.output, args.bac_db, get_kma_template_number(args, kma_results[0].name))
+        os.system(cmd)
+    else:
+        print ("No clear primary template found")
+        print ("tbd")
 
 
 def set_up_output_folder(args):
