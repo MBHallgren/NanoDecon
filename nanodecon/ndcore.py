@@ -2,6 +2,7 @@ import sys
 import os
 import logging
 import gzip
+import pyfastx
 
 
 import nanodecon.ndhelpers as ndhelpers
@@ -68,10 +69,14 @@ def derive_read_list_from_frag(file):
 
 def filter_out_reads_from_fastq(read_list, args):
     with gzip.open("{}/decon-reads.fastq.gz".format(args.output, 'rt', encoding='utf-8'), "wb") as outfile:
-        with gzip.open("{}/trimmed-reads.fastq.gz".format(args.output), "rb") as infile:
-            for line in infile:
-                if line.decode().split(" ")[0] in read_list:
-                    print (line.decode())
+        fq = pyfastx.Fastq('//home/projects/cge/people/malhal/binning/pigA_merged.fastq.gz', build_index=False)
+        for read in fq:
+            print (read.name)
+
+        #with gzip.open("{}/trimmed-reads.fastq.gz".format(args.output), "rb") as infile:
+        #    for line in infile:
+        #        if line.decode().split(" ")[0] in read_list:
+        #            print (line.decode())
 
 def evaluate_primary_results(args, kma_results):
     """ index 0 is top scoring template, -1 is lowest"""
