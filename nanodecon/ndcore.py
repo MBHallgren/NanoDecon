@@ -62,20 +62,20 @@ def get_kma_template_number(args, name):
 def derive_read_list_from_frag(file):
 
     with gzip.open(file, 'rt', encoding='utf-8') as f:
-        read_list = ["@" + line.split('\t')[6].split(" ")[0] for line in f]
+        read_list = [line.split('\t')[6].split(" ")[0] for line in f]
     return read_list
 
 
 
 def filter_out_reads_from_fastq(read_list, args):
-    with gzip.open("{}/decon-reads.fastq.gz".format(args.output, 'rt', encoding='utf-8'), "wb") as outfile:
+    with gzip.open("{}/decon-reads.fastq.gz".format(args.output), "wt") as outfile:
         fq = pyfastx.Fastq("{}/trimmed-reads.fastq.gz".format(args.output), build_index=False)
         for read in fq:
-            print (read)
-            print (read[0])
-            print (read[1])
-            print (read[2])
-            sys.exit()
+            if read[0] in read_list:
+                print (read[0], file=outfile)
+                print (read[1], file=outfile)
+                print ("+", file=outfile)
+                print (read[2], file=outfile)
 
 
         #with gzip.open("{}/tr  immed-reads.fastq.gz".format(args.output), "rb") as infile:
