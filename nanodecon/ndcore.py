@@ -73,7 +73,7 @@ def filter_out_reads_from_fastq(read_list, args):
                 if line.split()[0][1:] in read_list:
                     outfile.write(line)
 
-def evaluate_primary_results(args, kma_res  ults):
+def evaluate_primary_results(args, kma_results):
     """ index 0 is top scoring template, -1 is lowest"""
     prime_score = kma_results[0].score/kma_results[1].score
     if prime_score > 3:
