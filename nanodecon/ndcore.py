@@ -68,15 +68,20 @@ def derive_read_list_from_frag(file):
 
 
 def filter_out_reads_from_fastq(read_list, args):
-    with gzip.open("{}/decon-reads.fastq.gz".format(args.output), "wt") as outfile:
-        fq = pyfastx.Fastq("{}/trimmed-reads.fastq.gz".format(args.output), build_index=False)
-        for read in fq:
-            if read[0] in read_list:
-                print (read[0], file=outfile)
-                print (read[1], file=outfile)
-                print ("+", file=outfile)
-                print (read[2], file=outfile)
-
+    with gzip.open("{}/decon-reads.fastq.gz".format(args.output), "wt") as outfile1:
+        with gzip.open("{}/con-reads.fastq.gz".format(args.output), "wt") as outfile2:
+            fq = pyfastx.Fastq("{}/trimmed-reads.fastq.gz".format(args.output), build_index=False)
+            for read in fq:
+                if read[0] in read_list:
+                    print (read[0], file=outfile1)
+                    print (read[1], file=outfile1)
+                    print ("+", file=outfile1)
+                    print (read[2], file=outfile1)
+                else:
+                    print(read[0], file=outfile2)
+                    print(read[1], file=outfile2)
+                    print("+", file=outfile2)
+                    print(read[2], file=outfile2)
 
         #with gzip.open("{}/tr  immed-reads.fastq.gz".format(args.output), "rb") as infile:
         #    for line in infile:
