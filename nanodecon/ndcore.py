@@ -73,12 +73,12 @@ def filter_out_reads_from_fastq(read_list, args):
             fq = pyfastx.Fastq("{}/trimmed-reads.fastq.gz".format(args.output), build_index=False)
             for read in fq:
                 if read[0] in read_list:
-                    print (read[0], file=outfile1)
+                    print ("@" + read[0], file=outfile1)
                     print (read[1], file=outfile1)
                     print ("+", file=outfile1)
                     print (read[2], file=outfile1)
                 else:
-                    print(read[0], file=outfile2)
+                    print("@" + read[0], file=outfile2)
                     print(read[1], file=outfile2)
                     print("+", file=outfile2)
                     print(read[2], file=outfile2)
