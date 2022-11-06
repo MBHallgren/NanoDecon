@@ -67,10 +67,10 @@ def derive_read_list_from_frag(file):
     return read_list
 
 def test_filtered_reads(args):
-    cmd = "kma -i {}/decon-reads.fastq.gz -o {}/decon-search -t_db {} -t 8 -nf -mem_mode -sasm -ef -1t1".format(
+    cmd = "kma -i {}/decon-reads.fastq.gz -o {}/decon-search -t_db {} -t 8 -mem_mode -mp 20 -mrs 0.0 -bcNano -bc 0.7".format(
         args.output, args.output, args.bac_db)
     os.system(cmd)
-    cmd = "kma -i {}/con-reads.fastq.gz -o {}/con-search -t_db {} -t 8 -nf -mem_mode -sasm -ef -1t1".format(
+    cmd = "kma -i {}/con-reads.fastq.gz -o {}/con-search -t_db {} -t 8 -mem_mode -mp 20 -mrs 0.0 -bcNano -bc 0.7".format(
         args.output, args.output, args.bac_db)
     os.system(cmd)
 
