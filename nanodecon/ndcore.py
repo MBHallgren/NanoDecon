@@ -18,6 +18,7 @@ def nano_decon(args):
         set_up_output_folder(args)
         filt_long(args)
         primary_search(args)
+        test_filtered_reads(args)
         logging.info("NanoDecon finished successfully")
     except Exception as e:
         logging.error(e, exc_info=True)
@@ -65,6 +66,13 @@ def derive_read_list_from_frag(file):
         read_list = [line.split('\t')[6].split(" ")[0] for line in f]
     return read_list
 
+def test_filtered_reads(args):
+    cmd = "kma -i {}/decon-reads.fastq.gz -o {}/primary-search -t_db {} -t 8 -nf -mem_mode -sasm -ef -1t1".format(
+        args.output, args.output, args.bac_db)
+    os.system(cmd)
+    cmd = "kma -i {}/con-reads.fastq.gz -o {}/primary-search -t_db {} -t 8 -nf -mem_mode -sasm -ef -1t1".format(
+        args.output, args.output, args.bac_db)
+    os.system(cmd)
 
 
 def filter_out_reads_from_fastq(read_list, args):
