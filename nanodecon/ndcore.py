@@ -103,6 +103,9 @@ def evaluate_primary_results(args, kma_results):
         cmd = "kma -i {}/trimmed-reads.fastq.gz -o {}/primary-alignment -t_db {} -t 8 -mint3 -Mt1 {} ".format(args.output, args.output, args.bac_db, get_kma_template_number(args, kma_results[0].name))
         os.system(cmd)
         filter_out_reads_from_fastq(derive_read_list_from_frag("{}/primary-alignment.frag.gz".format(args.output)), args)
+        cmd = "kma -i {}/decon-reads.fastq.gz -o {}/decon-alignment -t_db {} -t 8 -mint3 -Mt1 {} ".format(
+            args.output, args.output, args.bac_db, get_kma_template_number(args, kma_results[0].name))
+        os.system(cmd)
     else:
         print ("No clear primary template found")
         print ("tbd")
